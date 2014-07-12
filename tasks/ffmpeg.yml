@@ -1,0 +1,12 @@
+---
+- name: clone latest ffmpeg
+  git: repo=git://github.com/FFmpeg/FFmpeg.git dest={{ ffmpeg_source_dir }}/ffmpeg update=no
+
+- name: compile ffmpeg
+  command: "{{ item }} chdir={{ ffmpeg_source_dir }}/ffmpeg creates={{ ffmpeg_bin_dir }}/ffmpeg"
+  environment: ffmpeg_env
+  with_items:
+    - ./configure --prefix="{{ ffmpeg_build }}" --extra-cflags="-I{{ ffmpeg_build }}/include" --extra-ldflags="-L{{ ffmpeg_build }}/lib" --bindir="{{ ffmpeg_bin_dir }}" --extra-libs=-ldl --enable-gpl --enable-libass --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-nonfree --enable-libxvid
+    - make
+    - sudo make install
+    - make distclean

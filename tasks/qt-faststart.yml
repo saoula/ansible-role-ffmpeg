@@ -1,0 +1,6 @@
+---
+- name: compile qt-faststart
+  command: "{{ item }} chdir={{ ffmpeg_source_dir }}/ffmpeg"
+  with_items:
+    - make tools/qt-faststart
+    - sudo make install

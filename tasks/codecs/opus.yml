@@ -1,0 +1,12 @@
+---
+- name: clone latest opus
+  git:  repo=git://git.opus-codec.org/opus.git dest={{ ffmpeg_source_dir }}/opus update=no
+
+- name: compile libopus
+  command: "{{ item }} chdir={{ ffmpeg_source_dir }}/opus creates={{ ffmpeg_build }}/lib/libopus.a"
+  with_items:
+    - ./autogen.sh
+    - ./configure --prefix={{ ffmpeg_build }} --disable-shared
+    - make
+    - sudo make install
+    - make distclean
