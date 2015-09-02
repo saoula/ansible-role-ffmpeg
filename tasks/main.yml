@@ -3,7 +3,9 @@
 - include: yasm.yml
 - include: codecs/fdk-aac.yml
 - include: codecs/x264.yml
+- include: codecs/x265.yml
 - include: codecs/libvpx.yml
 - include: codecs/opus.yml
 - include: ffmpeg.yml
 - include: qt-faststart.yml
+- include: user_permission.yml

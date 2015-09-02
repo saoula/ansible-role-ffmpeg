@@ -1,12 +1,18 @@
 ---
 - name: clone latest yasm
-  git:  repo=git://github.com/yasm/yasm.git dest={{ ffmpeg_source_dir }}/yasm update=no
+  git:
+    repo: "https://github.com/yasm/yasm.git"
+    dest: "{{ ffmpeg_source_dir }}/yasm"
+    update: no
 
-- name: compile yasm 
-  command: "{{ item }} chdir={{ ffmpeg_source_dir }}/yasm creates={{ ffmpeg_bin_dir }}/yasm"
+- name: compile yasm
+  command: "{{ item }}"
+  args:
+    chdir: "{{ ffmpeg_source_dir }}/yasm"
+    creates: "{{ ffmpeg_bin_dir }}/yasm"
   with_items:
     - ./autogen.sh
-    - ./configure --prefix={{ ffmpeg_build }} --bindir={{ ffmpeg_bin_dir }}
+    - ./configure --prefix={{ ffmpeg_build_dir }} --bindir={{ ffmpeg_bin_dir }}
     - make
-    - sudo make install
+    - make install
     - make distclean

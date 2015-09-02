@@ -1,7 +1,9 @@
 ---
-ffmpeg_source_dir: "/home/{{ ansible_ssh_user }}/ffmpeg_source"
-ffmpeg_build: "/usr/local"
-ffmpeg_bin_dir: "/usr/local/bin"
+deploy_user: "{{ ansible_ssh_user }}"
+ffmpeg_base_dir: "/home/{{ deploy_user }}/ffmpeg"
+ffmpeg_source_dir: "{{ ffmpeg_base_dir }}/source"
+ffmpeg_build_dir: "{{ ffmpeg_base_dir }}/build"
+ffmpeg_bin_dir: "{{ ffmpeg_build_dir }}/bin"
 ffmpeg_env:
   PATH: "{{ ffmpeg_bin_dir }}:{{ lookup('env','PATH') }}"
-  PKG_CONFIG_PATH: "{{ ffmpeg_build }}/lib/pkgconfig"
+  PKG_CONFIG_PATH: "{{ ffmpeg_build_dir }}/lib/pkgconfig"

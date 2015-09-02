@@ -1,12 +1,18 @@
 ---
 - name: clone latest libvpx
-  git:  repo=https://chromium.googlesource.com/webm/libvpx.git dest={{ ffmpeg_source_dir }}/libvpx update=no
+  git:
+    repo: "https://chromium.googlesource.com/webm/libvpx.git"
+    dest: "{{ ffmpeg_source_dir }}/libvpx"
+    update: no
 
 - name: compile libvpx
-  command: "{{ item }} chdir={{ ffmpeg_source_dir }}/libvpx creates={{ ffmpeg_build }}/lib/libvpx.a"
+  command: "{{ item }}"
+  args:
+    chdir: "{{ ffmpeg_source_dir }}/libvpx"
+    creates: "{{ ffmpeg_build_dir }}/lib/libvpx.a"
   environment: ffmpeg_env
   with_items:
-    - ./configure --prefix={{ ffmpeg_build }} --disable-shared
+    - ./configure --prefix={{ ffmpeg_build_dir }} --disable-shared --disable-examples --disable-unit-tests
     - make
-    - sudo make install
+    - make install
     - make clean

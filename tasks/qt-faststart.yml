@@ -1,6 +1,14 @@
 ---
 - name: compile qt-faststart
-  command: "{{ item }} chdir={{ ffmpeg_source_dir }}/ffmpeg"
+  command: "{{ item }}"
+  args:
+    chdir: "{{ ffmpeg_source_dir }}/ffmpeg"
+    creates: "{{ ffmpeg_source_dir }}/ffmpeg/tools/qt-faststart"
   with_items:
     - make tools/qt-faststart
-    - sudo make install
+
+- name: move qt-faststart runcom to ffmpeg bin folder
+  command: "cp -a tools/qt-faststart {{ ffmpeg_bin_dir }}/"
+  args:
+    chdir: "{{ ffmpeg_source_dir }}/ffmpeg"
+    creates: "{{ ffmpeg_bin_dir }}/qt-faststart"

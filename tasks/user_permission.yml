@@ -1,0 +1,8 @@
+---
+- name: amend permission for ffmpeg directory
+  file:
+    path: "{{ ffmpeg_base_dir }}"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_user }}"
+    state: directory
+    recurse: yes

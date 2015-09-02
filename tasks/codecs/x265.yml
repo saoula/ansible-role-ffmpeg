@@ -1,0 +1,18 @@
+---
+- name: clone latest x265
+  git:
+    repo: "https://github.com/videolan/x265.git"
+    dest: "{{ ffmpeg_source_dir }}/x265"
+    update: no
+
+- name: compile x265
+  shell: "{{ item }}"
+  environment: ffmpeg_env
+  args:
+    chdir: "{{ ffmpeg_source_dir }}/x265"
+    creates: "{{ ffmpeg_bin_dir }}/x265"
+  with_items:
+    - cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX={{ ffmpeg_build_dir }} -DCMAKE_BINARY_DIR={{ ffmpeg_bin_dir}} -DENABLE_SHARED:bool=off source
+    - make
+    - make install
+    - make clean

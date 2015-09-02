@@ -1,31 +1,33 @@
 ---
 - name: apt-get update
-  sudo: true
-  apt: update_cache=yes cache_valid_time=3600
-  
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
 - name: install dependencies
-  sudo: true
-  apt: pkg={{ item }} state=latest
+  apt:
+    pkg: "{{ item }}"
+    state: latest
   with_items:
     - git
-    - autoconf 
-    - automake 
-    - build-essential 
+    - autoconf
+    - automake
+    - checkinstall
+    - build-essential
     - pkg-config
     - libtool
-    - libass-dev 
+    - libass-dev
     - libgpac-dev
-    - libsdl1.2-dev 
-    - libtheora-dev 
-    - libva-dev 
-    - libvdpau-dev 
-    - libvorbis-dev 
-    - texi2html 
+    - libsdl1.2-dev
+    - libtheora-dev
+    - libva-dev
+    - libvdpau-dev
+    - libvorbis-dev
+    - texi2html
     - zlib1g-dev
     - libmp3lame-dev
     - libopenjpeg-dev
     - libxvidcore-dev
     - libfreetype6-dev
-    - libfaac-devi
-    - libfaad-dev
     - libdirac-dev
+    - cmake
